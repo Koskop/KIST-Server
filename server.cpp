@@ -42,6 +42,8 @@ void Server::slotServerRead() {
 
 void Server::slotClientDisconnected() { mTcpSocket->close(); }
 
+void Server::setPort(quint16 p) { this->port = p; }
+
 QString Server::getIpAddress() {
   QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
   // use the first non-localhost IPv4 address
@@ -58,3 +60,5 @@ QString Server::getIpAddress() {
 
   return this->ipAddress;
 }
+
+quint16 Server::getPort() { return this->port; }

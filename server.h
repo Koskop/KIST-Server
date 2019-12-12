@@ -10,6 +10,13 @@ class Server : public QObject {
  public:
   explicit Server(QObject *parent = nullptr);
 
+  // setters
+  void setPort(quint16 p);
+
+  // getters
+  QString getIpAddress();
+  quint16 getPort();
+
  public slots:
   void slotNewConnection();
   void slotServerRead();
@@ -22,9 +29,6 @@ class Server : public QObject {
   // variables
   QString ipAddress;
   quint16 port;
-
-  // methods
-  QString getIpAddress();
 };
 
 #endif  // SERVER_H
