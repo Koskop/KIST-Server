@@ -18,6 +18,13 @@ class Server : public QObject {
  private:
   QTcpServer *mTcpServer;
   QTcpSocket *mTcpSocket;
+
+  // variables
+  QString ipAddress;
+  quint16 port;
+
+  // methods
+  QString getIpAddress();
 };
 
 #endif  // SERVER_H
