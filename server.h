@@ -8,7 +8,10 @@
 class Server : public QObject {
   Q_OBJECT
  public:
-  explicit Server(QObject *parent = nullptr);
+  explicit Server(QObject *parent = nullptr, quint16 serverPort = 6000);
+
+  // methods
+  void start();
 
   // setters
   void setPort(quint16 p);

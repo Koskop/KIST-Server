@@ -4,19 +4,21 @@
 #include <QDebug>
 #include <QNetworkInterface>
 
-Server::Server(QObject *parent) : QObject(parent) {
-  this->port = 6000;
+Server::Server(QObject *parent, quint16 serverPort) : QObject(parent) {
+  this->setPort(serverPort);
   mTcpServer = new QTcpServer(this);
 
   connect(mTcpServer, &QTcpServer::newConnection, this,
           &Server::slotNewConnection);
+}
 
+void Server::start() {
   if (!mTcpServer->listen(QHostAddress::Any, port)) {
     qDebug() << "Server is not started";
   } else {
     qDebug() << "Server is started";
     qDebug() << "Server IP: " << this->getIpAddress();
-    qDebug() << "Server port: " << this->port;
+    qDebug() << "Server port: " << this->getPort();
   }
 }
 
