@@ -19,14 +19,16 @@ HEADERS += \
     cathedra.h \
     database.h \
     person.h \
-    server.h
+    server.h \
+    violation.h
 
 SOURCES += \
         cathedra.cpp \
         database.cpp \
         main.cpp \
         person.cpp \
-        server.cpp
+        server.cpp \
+        violation.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
