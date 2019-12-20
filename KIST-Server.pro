@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     database.h \
+    person.h \
     server.h
 
 SOURCES += \
         database.cpp \
         main.cpp \
+        person.cpp \
         server.cpp
 
 # Default rules for deployment.
