@@ -22,6 +22,7 @@ HEADERS += \
     person.h \
     server.h \
     sorderkind.h \
+    speciality.h \
     spunishkind.h \
     sviolationkind.h \
     violation.h
@@ -34,6 +35,7 @@ SOURCES += \
         person.cpp \
         server.cpp \
         sorderkind.cpp \
+        speciality.cpp \
         spunishkind.cpp \
         sviolationkind.cpp \
         violation.cpp
