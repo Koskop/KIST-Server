@@ -20,6 +20,7 @@ HEADERS += \
     database.h \
     person.h \
     server.h \
+    sviolationkind.h \
     violation.h
 
 SOURCES += \
@@ -28,6 +29,7 @@ SOURCES += \
         main.cpp \
         person.cpp \
         server.cpp \
+        sviolationkind.cpp \
         violation.cpp
 
 # Default rules for deployment.
