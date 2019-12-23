@@ -20,6 +20,7 @@ HEADERS += \
     database.h \
     person.h \
     server.h \
+    spunishkind.h \
     sviolationkind.h \
     violation.h
 
@@ -29,6 +30,7 @@ SOURCES += \
         main.cpp \
         person.cpp \
         server.cpp \
+        spunishkind.cpp \
         sviolationkind.cpp \
         violation.cpp
 
