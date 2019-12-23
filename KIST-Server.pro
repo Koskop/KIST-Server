@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += \
     cathedra.h \
     database.h \
+    orders.h \
     person.h \
     server.h \
     sorderkind.h \
@@ -29,6 +30,7 @@ SOURCES += \
         cathedra.cpp \
         database.cpp \
         main.cpp \
+        orders.cpp \
         person.cpp \
         server.cpp \
         sorderkind.cpp \
