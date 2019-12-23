@@ -5,6 +5,6 @@ SPunishKind::SPunishKind(unsigned int punishKindId, QString punishKindName) {
   this->punishKindName = punishKindName;
 }
 
-unsigned int SPunishKind::getPunishKindName() { return this->punishKindId; }
+unsigned int SPunishKind::getPunishKindId() { return this->punishKindId; }
 
 QString SPunishKind::getPunishKindName() { return this->punishKindName; }

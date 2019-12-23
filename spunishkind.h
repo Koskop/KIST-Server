@@ -8,7 +8,7 @@ class SPunishKind
  public:
   SPunishKind(unsigned int punishKindId, QString punishKindName);
 
-  unsigned intgetPunishKindId();
+  unsigned getPunishKindId();
   QString getPunishKindName();
 
  private:
