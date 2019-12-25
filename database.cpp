@@ -6,7 +6,37 @@ DataBase::DataBase(QString dataBasePath) {
 
   if (!this->sdb.open()) {
     qDebug() << this->sdb.lastError().text();
+  } else {
+    qDebug() << "Conected to data base!";
   }
+}
+
+QList<Person> DataBase::getPersonsFullName() {
+  QList<Person> queryResult;
+  QSqlQuery query("SELECT * FROM PERSON");
+  while (query.next()) {
+    Person tmp(query.value(0).toUInt(), query.value(1).toString(),
+               query.value(2).toString(), query.value(3).toString());
+    queryResult.push_back(tmp);
+  }
+  return queryResult;
+}
+
+QList<Cathedra> DataBase::getCathedrs() {
+  QList<Cathedra> queryResult;
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT * FROM CAFEDRA");
+  if (!ok) qDebug() << query.lastError();
+
+  while (query.next()) {
+    Cathedra tmp(query.value(0).toUInt(), query.value(1).toString(),
+                 query.value(2).toString());
+    qDebug() << query.value(0).toUInt();
+    qDebug() << query.value(1).toString();
+    qDebug() << query.value(2).toString();
+    queryResult.push_back(tmp);
+  }
+  return queryResult;
 }
 
 DataBase::~DataBase() { this->sdb.close(); }
