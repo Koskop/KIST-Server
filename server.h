@@ -17,12 +17,12 @@ class Server : public QObject {
   // setters
   void setPort(quint16 p);
 
-  QByteArray getPesronsName();
-  QByteArray getViolationByPersonId(unsigned int personId);
-  QByteArray getCathedras();
-  QByteArray getGroupAndSpecialityByCathedraId(unsigned int cathedraId);
-  QByteArray getStudentsName();
-  QByteArray getStudentInfo(unsigned int personId);
+  QByteArray getPesronsName();                                            // 0
+  QByteArray getViolationByPersonId(unsigned int personId);               // 1
+  QByteArray getCathedras();                                              // 2
+  QByteArray getGroupAndSpecialityByCathedraId(unsigned int cathedraId);  // 3
+  QByteArray getStudentsName();                                           // 4
+  QByteArray getStudentInfo(unsigned int personId);                       // 5
 
   // getters
   QString getIpAddress();
