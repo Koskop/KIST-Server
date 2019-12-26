@@ -146,4 +146,15 @@ QString DataBase::getStudentsNameByPersonId(unsigned int personId) {
          query.value("Patronymic").toString();
 }
 
+SMark DataBase::getSMarkNyId(unsigned int markId) {
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT * FROM SMARK WHERE Mark_ID = '" +
+                       QString::number(markId) + "'");
+  if (!ok) qDebug() << query.lastError();
+  query.next();
+  SMark queryResult(query.value("Mark_ID").toUInt(),
+                    query.value("Mark_name").toString());
+  return queryResult;
+}
+
 DataBase::~DataBase() { this->sdb.close(); }
