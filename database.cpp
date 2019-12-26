@@ -160,7 +160,7 @@ SMark DataBase::getSMarkNyId(unsigned int markId) {
 QList<StudentMark> DataBase::getStudentsMarksById(unsigned int personId) {
   QList<StudentMark> queryResult;
   QSqlQuery query(sdb);
-  bool ok = query.exec("SELECT * FROM STUDENT_MARKS WHERE Mark_ID = '" +
+  bool ok = query.exec("SELECT *h FROM STUDENT_MARKS WHERE Student_ID = '" +
                        QString::number(personId) + "'");
   if (!ok) qDebug() << query.lastError();
 
