@@ -4,8 +4,7 @@
 #include <QList>
 #include <QString>
 #include <QtSql>
-#include "cathedra.h"
-#include "person.h"
+#include "tables.h"
 
 class DataBase {
  public:

@@ -30,6 +30,7 @@ HEADERS += \
     studentgroup.h \
     studentmark.h \
     sviolationkind.h \
+    tables.h \
     violation.h
 
 SOURCES += \
