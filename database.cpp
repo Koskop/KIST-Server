@@ -57,11 +57,11 @@ SViolationKind DataBase::getSViolationKindById(unsigned int violationKindId) {
   return queryResult;
 }
 
-SPunishKind DataBase::getSPunishKindById(unsigned int violationKindId) {
+SPunishKind DataBase::getSPunishKindById(unsigned int punishKindId) {
   QSqlQuery query(sdb);
   bool ok =
       query.exec("SELECT * FROM SVIOLATION_KIND WHERE Punish_kind_ID = '" +
-                 QString::number(violationKindId) + "'");
+                 QString::number(punishKindId) + "'");
   if (!ok) qDebug() << query.lastError();
   query.next();
   SPunishKind queryResult(query.value("Punish_kind_ID").toUInt(),
