@@ -13,6 +13,7 @@ class DataBase {
   // first query
   QList<Person> getPersonsFullName();
   QList<Violation> getViolationByPersonId(unsigned int personId);
+  Orders getOrdersByOrdersId(unsigned int ordersId);
   SViolationKind getSViolationKindById(unsigned int violationKindId);
   SPunishKind getSPunishKindById(unsigned int violationKindId);
   SOrderKind getSOrderKindById(unsigned int orderKindById);

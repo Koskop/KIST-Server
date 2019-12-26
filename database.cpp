@@ -45,6 +45,20 @@ QList<Violation> DataBase::getViolationByPersonId(unsigned int personId) {
   return queryResult;
 }
 
+Orders DataBase::getOrdersByOrdersId(unsigned int ordersId) {
+  QSqlQuery query(sdb);
+  bool ok =
+      query.exec("SELECT * FROM SVIOLATION_KIND WHERE Violation_kind_ID = '" +
+                 QString::number(ordersId) + "'");
+  if (!ok) qDebug() << query.lastError();
+  query.next();
+  Orders queryResult(
+      query.value("Order_ID").toUInt(), query.value("Order_kind_ID").toUInt(),
+      query.value("Order_date").toString(), query.value("Order_no").toUInt(),
+      query.value("Order_text").toString());
+  return queryResult;
+}
+
 SViolationKind DataBase::getSViolationKindById(unsigned int violationKindId) {
   QSqlQuery query(sdb);
   bool ok =
