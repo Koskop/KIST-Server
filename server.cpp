@@ -1,7 +1,9 @@
 #include "server.h"
+#include <database.h>
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QDebug>
+#include <QJsonDocument>
 #include <QNetworkInterface>
 
 Server::Server(QObject *parent, quint16 serverPort) : QObject(parent) {
@@ -10,6 +12,7 @@ Server::Server(QObject *parent, quint16 serverPort) : QObject(parent) {
 
   connect(mTcpServer, &QTcpServer::newConnection, this,
           &Server::slotNewConnection);
+  this->base.openConnection("CIST.sqlite3");
 }
 
 void Server::start() {
@@ -37,14 +40,35 @@ void Server::slotServerRead() {
     QByteArray array = mTcpSocket->readAll();
     qDebug() << "Date: " << QDateTime::currentDateTime().toString() << "\n"
              << "Message:" << array;
+    QByteArray responce;
+    responce = array;
 
-    mTcpSocket->write(array);
+    if (array.toStdString() == "getPesronsName" ||
+        array.toStdString() == "getPesronsName\r\n") {
+      responce = this->getPesronsName();
+    }
+
+    mTcpSocket->write(responce);
   }
 }
 
 void Server::slotClientDisconnected() { mTcpSocket->close(); }
 
 void Server::setPort(quint16 p) { this->port = p; }
+
+QByteArray Server::getPesronsName() {
+  QJsonDocument jsonDoc;
+  QJsonArray jsonMainArray;
+  for (auto a : base.getPersonsFullName()) {
+    QJsonArray jsonArray;
+    jsonArray.push_back(QString::number(a.getPersonId()));
+    jsonArray.push_back(a.getFullName());
+    jsonMainArray.push_back(jsonArray);
+  }
+  jsonDoc.setArray(jsonMainArray);
+  qDebug() << jsonDoc;
+  return jsonDoc.toJson();
+}
 
 QString Server::getIpAddress() {
   QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();

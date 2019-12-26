@@ -1,6 +1,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include <database.h>
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -15,6 +16,8 @@ class Server : public QObject {
 
   // setters
   void setPort(quint16 p);
+
+  QByteArray getPesronsName();
 
   // getters
   QString getIpAddress();
@@ -32,6 +35,7 @@ class Server : public QObject {
   // variables
   QString ipAddress;
   quint16 port;
+  DataBase base;
 };
 
 #endif  // SERVER_H
