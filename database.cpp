@@ -157,4 +157,19 @@ SMark DataBase::getSMarkNyId(unsigned int markId) {
   return queryResult;
 }
 
+QList<StudentMark> DataBase::getStudenrsMarksById(unsigned int personId) {
+  QList<StudentMark> queryResult;
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT * FROM STUDENT_MARKS WHERE Mark_ID = '" +
+                       QString::number(personId) + "'");
+  if (!ok) qDebug() << query.lastError();
+
+  while (query.next()) {
+    StudentMark tmp(query.value("Student_ID").toUInt(),
+                    query.value("Mark_ID").toUInt());
+    queryResult.push_back(tmp);
+  }
+  return queryResult;
+}
+
 DataBase::~DataBase() { this->sdb.close(); }

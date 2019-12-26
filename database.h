@@ -25,6 +25,7 @@ class DataBase {
   QList<Student> getStudents();
   QString getStudentsNameByPersonId(unsigned int personId);
   SMark getSMarkNyId(unsigned int markId);
+  QList<StudentMark> getStudenrsMarksById(unsigned int personId);
 
  private:
   QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
