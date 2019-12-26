@@ -136,12 +136,13 @@ QList<Student> DataBase::getStudents() {
 
 QString DataBase::getStudentsNameByPersonId(unsigned int personId) {
   QSqlQuery query(sdb);
-  bool ok = query.exec(
-      "SELECT Surname, Name, Patronymic FROM PERSON WHERE Person_ID='" +
-      QString::number(personId) + "'");
+  bool ok = query.exec("SELECT * FROM PERSON WHERE Person_ID = '" +
+                       QString::number(personId) + "'");
   if (!ok) qDebug() << query.lastError();
+  query.next();
 
-  return query.value("Surname").toString() + query.value("Name").toString() +
+  return query.value("Surname").toString() + " " +
+         query.value("Name").toString() + " " +
          query.value("Patronymic").toString();
 }
 
