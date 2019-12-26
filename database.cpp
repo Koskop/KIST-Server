@@ -119,4 +119,30 @@ QList<Cathedra> DataBase::getCathedrs() {
   return queryResult;
 }
 
+QList<Student> DataBase::getStudents() {
+  QList<Student> queryResult;
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT * FROM STUDENT");
+  if (!ok) qDebug() << query.lastError();
+
+  while (query.next()) {
+    Student tmp(query.value("Student_ID").toUInt(),
+                query.value("Book_no").toString(),
+                query.value("Note").toString());
+    queryResult.push_back(tmp);
+  }
+  return queryResult;
+}
+
+QString DataBase::getStudentsNameByPersonId(unsigned int personId) {
+  QSqlQuery query(sdb);
+  bool ok = query.exec(
+      "SELECT Surname, Name, Patronymic FROM PERSON WHERE Person_ID='" +
+      QString::number(personId) + "'");
+  if (!ok) qDebug() << query.lastError();
+
+  return query.value("Surname").toString() + query.value("Name").toString() +
+         query.value("Patronymic").toString();
+}
+
 DataBase::~DataBase() { this->sdb.close(); }

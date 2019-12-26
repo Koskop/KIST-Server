@@ -22,6 +22,8 @@ class DataBase {
   // second query
   QList<Cathedra> getCathedrs();
   // third query
+  QList<Student> getStudents();
+  QString getStudentsNameByPersonId(unsigned int personId);
 
  private:
   QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
