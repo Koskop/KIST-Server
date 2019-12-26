@@ -69,6 +69,18 @@ SPunishKind DataBase::getSPunishKindById(unsigned int violationKindId) {
   return queryResult;
 }
 
+SOrderKind DataBase::getSOrderKindById(unsigned int orderKindById) {
+  QSqlQuery query(sdb);
+  bool ok =
+      query.exec("SELECT * FROM SVIOLATION_KIND WHERE Violation_kind_ID = '" +
+                 QString::number(orderKindById) + "'");
+  if (!ok) qDebug() << query.lastError();
+  query.next();
+  SOrderKind queryResult(query.value("Order_kind_ID").toUInt(),
+                         query.value("Order_kind_name").toString());
+  return queryResult;
+}
+
 QList<Cathedra> DataBase::getCathedrs() {
   QList<Cathedra> queryResult;
   QSqlQuery query(sdb);
