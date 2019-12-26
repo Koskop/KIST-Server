@@ -33,8 +33,9 @@ QList<Cathedra> DataBase::getCathedrs() {
   if (!ok) qDebug() << query.lastError();
 
   while (query.next()) {
-    Cathedra tmp(query.value(0).toUInt(), query.value(1).toString(),
-                 query.value(2).toString());
+    Cathedra tmp(query.value("Cafedra_ID").toUInt(),
+                 query.value("Cafedra_name").toString(),
+                 query.value("Cafedra_shifr").toString());
     queryResult.push_back(tmp);
   }
   return queryResult;
