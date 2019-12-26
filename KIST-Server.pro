@@ -27,6 +27,7 @@ HEADERS += \
     speciality.h \
     spunishkind.h \
     student.h \
+    studentmark.h \
     sviolationkind.h \
     violation.h
 
@@ -43,6 +44,7 @@ SOURCES += \
         speciality.cpp \
         spunishkind.cpp \
         student.cpp \
+        studentmark.cpp \
         sviolationkind.cpp \
         violation.cpp
 
