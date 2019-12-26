@@ -18,6 +18,7 @@ class Server : public QObject {
   void setPort(quint16 p);
 
   QByteArray getPesronsName();
+  QByteArray getViolationByPersonId(unsigned int personId);
 
   // getters
   QString getIpAddress();

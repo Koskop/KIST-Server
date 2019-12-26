@@ -38,16 +38,19 @@ void Server::slotNewConnection() {
 void Server::slotServerRead() {
   while (mTcpSocket->bytesAvailable() > 0) {
     QByteArray array = mTcpSocket->readAll();
-    qDebug() << "Date: " << QDateTime::currentDateTime().toString() << "\n"
-             << "Message:" << array;
+    qDebug() << array;
+    QJsonDocument request;
+
     QByteArray responce;
     responce = array;
-
+    request.fromJson(array);
     if (array.toStdString() == "getPesronsName" ||
         array.toStdString() == "getPesronsName\r\n") {
       responce = this->getPesronsName();
     }
-
+    //    responce = this->getViolationByPersonId(1);
+    //    request = QJsonDocument::fromJson(responce);
+    //    qDebug() << request[0][0];
     mTcpSocket->write(responce);
   }
 }
@@ -63,6 +66,27 @@ QByteArray Server::getPesronsName() {
     QJsonArray jsonArray;
     jsonArray.push_back(QString::number(a.getPersonId()));
     jsonArray.push_back(a.getFullName());
+    jsonMainArray.push_back(jsonArray);
+  }
+  jsonDoc.setArray(jsonMainArray);
+  qDebug() << jsonDoc;
+  return jsonDoc.toJson();
+}
+
+QByteArray Server::getViolationByPersonId(unsigned int personId) {
+  QJsonDocument jsonDoc;
+  QJsonArray jsonMainArray;
+  for (auto a : base.getViolationByPersonId(personId)) {
+    QJsonArray jsonArray;
+    jsonArray.push_back(QString::number(a.getViolationId()));
+    jsonArray.push_back(
+        base.getSViolationKindById(a.getViolationId()).getViolationKindName());
+    jsonArray.push_back(
+        base.getSPunishKindById(a.getPunishKindId()).getPunishKindName());
+    jsonArray.push_back(
+        base.getSOrderKindById(
+                base.getOrdersByOrdersId(a.getOrderId()).getOrderKindId())
+            .getOrderKindName());
     jsonMainArray.push_back(jsonArray);
   }
   jsonDoc.setArray(jsonMainArray);
