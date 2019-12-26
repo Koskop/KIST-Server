@@ -147,7 +147,7 @@ QList<Groups> DataBase::getGroupsBySpecialityId(unsigned int specialityId) {
     Groups tmp(query.value("Group_ID").toUInt(),
                query.value("Speciality_ID").toUInt(),
                query.value("Group_code").toString(),
-               query.value("Group_creat_date").toString());
+               query.value("Groupe_creat_date").toString());
     queryResult.push_back(tmp);
   }
   return queryResult;
