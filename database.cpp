@@ -1,7 +1,19 @@
 #include "database.h"
 #include <QDebug>
 
+DataBase::DataBase() {}
+
 DataBase::DataBase(QString dataBasePath) {
+  this->sdb.setDatabaseName(dataBasePath);
+
+  if (!this->sdb.open()) {
+    qDebug() << this->sdb.lastError().text();
+  } else {
+    qDebug() << "Conected to data base!";
+  }
+}
+
+void DataBase::openConnection(QString dataBasePath) {
   this->sdb.setDatabaseName(dataBasePath);
 
   if (!this->sdb.open()) {

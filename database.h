@@ -8,7 +8,9 @@
 
 class DataBase {
  public:
+  DataBase();
   DataBase(QString dataBasePath);
+  void openConnection(QString dataBasePath);
   ~DataBase();
   // first query
   QList<Person> getPersonsFullName();
