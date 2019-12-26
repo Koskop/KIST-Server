@@ -52,7 +52,7 @@ void Server::slotServerRead() {
 
     // 3
     //    responce = this->getStudentsName();
-
+    responce = this->getStudentInfo(1);
     //    request = QJsonDocument::fromJson(responce);
     //    qDebug() << request[0][0];
     mTcpSocket->write(responce);
@@ -119,11 +119,11 @@ QByteArray Server::getStudentInfo(unsigned int personId) {
       base.getStudentGroup(
               base.getStudentGroupByStudentId(personId).getGroupId())
           .getGroupCode());
+  QJsonArray jsonArray;
   for (auto a : base.getStudentsMarksById(personId)) {
-    QJsonArray jsonArray;
     jsonArray.push_back(base.getSMarkNyId(a.getmarkId()).getMarkName());
-    jsonMainArray.push_back(jsonArray);
   }
+  jsonMainArray.push_back(jsonArray);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
   return jsonDoc.toJson();
