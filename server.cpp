@@ -112,6 +112,23 @@ QByteArray Server::getStudentsName() {
   return jsonDoc.toJson();
 }
 
+QByteArray Server::getStudentInfo(unsigned int personId) {
+  QJsonDocument jsonDoc;
+  QJsonArray jsonMainArray;
+  jsonMainArray.push_back(
+      base.getStudentGroup(
+              base.getStudentGroupByStudentId(personId).getGroupId())
+          .getGroupCode());
+  for (auto a : base.getStudentsMarksById(personId)) {
+    QJsonArray jsonArray;
+    jsonArray.push_back(base.getSMarkNyId(a.getmarkId()).getMarkName());
+    jsonMainArray.push_back(jsonArray);
+  }
+  jsonDoc.setArray(jsonMainArray);
+  qDebug() << jsonDoc;
+  return jsonDoc.toJson();
+}
+
 QString Server::getIpAddress() {
   QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
   // use the first non-localhost IPv4 address
