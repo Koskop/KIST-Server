@@ -14,7 +14,7 @@ class DataBase {
   QList<Person> getPersonsFullName();
   QList<Violation> getViolationByPersonId(unsigned int personId);
   SViolationKind getSViolationKindById(unsigned int violationKindId);
-
+  SPunishKind getSPunishKindById(unsigned int violationKindId);
   // second query
   QList<Cathedra> getCathedrs();
   // third query
