@@ -184,4 +184,17 @@ StudentGroup DataBase::getStudentGroupByStudentId(unsigned int studentId) {
   return queryResult;
 }
 
+Groups DataBase::getStudentGroup(unsigned int groupID) {
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT * FROM GROUPS WHERE Group_ID = '" +
+                       QString::number(groupID) + "'");
+  if (!ok) qDebug() << query.lastError();
+  query.next();
+  Groups queryResult(query.value("Group_ID").toUInt(),
+                     query.value("Speciality_ID").toUInt(),
+                     query.value("Group_code").toString(),
+                     query.value("Groupe_creat_date").toString());
+  return queryResult;
+}
+
 DataBase::~DataBase() { this->sdb.close(); }

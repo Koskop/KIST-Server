@@ -21,12 +21,14 @@ class DataBase {
   SOrderKind getSOrderKindById(unsigned int orderKindById);
   // second query
   QList<Cathedra> getCathedrs();
+
   // third query
   QList<Student> getStudents();
   QString getStudentsNameByPersonId(unsigned int personId);
   SMark getSMarkNyId(unsigned int markId);
   QList<StudentMark> getStudentsMarksById(unsigned int personId);
   StudentGroup getStudentGroupByStudentId(unsigned int personId);
+  Groups getStudentGroup(unsigned int groupID);
 
  private:
   QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
