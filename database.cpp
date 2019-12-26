@@ -119,6 +119,23 @@ QList<Cathedra> DataBase::getCathedrs() {
   return queryResult;
 }
 
+QList<Speciality> DataBase::getSpecialityByCathedrsId(unsigned int cafedraId) {
+  QList<Speciality> queryResult;
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT *h FROM SPECIALITY WHERE Cafedra_ID = '" +
+                       QString::number(cafedraId) + "'");
+  if (!ok) qDebug() << query.lastError();
+
+  while (query.next()) {
+    Speciality tmp(query.value("Speciality_ID").toUInt(),
+                   query.value("Cafedra_ID").toUInt(),
+                   query.value("Speciality_name").toString(),
+                   query.value("Speciality_shifr").toString());
+    queryResult.push_back(tmp);
+  }
+  return queryResult;
+}
+
 QList<Student> DataBase::getStudents() {
   QList<Student> queryResult;
   QSqlQuery query(sdb);

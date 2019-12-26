@@ -21,6 +21,7 @@ class DataBase {
   SOrderKind getSOrderKindById(unsigned int orderKindById);
   // second query
   QList<Cathedra> getCathedrs();
+  QList<Speciality> getSpecialityByCathedrsId(unsigned int cafedraId);
 
   // third query
   QList<Student> getStudents();
