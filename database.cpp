@@ -157,7 +157,7 @@ SMark DataBase::getSMarkNyId(unsigned int markId) {
   return queryResult;
 }
 
-QList<StudentMark> DataBase::getStudenrsMarksById(unsigned int personId) {
+QList<StudentMark> DataBase::getStudentsMarksById(unsigned int personId) {
   QList<StudentMark> queryResult;
   QSqlQuery query(sdb);
   bool ok = query.exec("SELECT * FROM STUDENT_MARKS WHERE Mark_ID = '" +
@@ -169,6 +169,18 @@ QList<StudentMark> DataBase::getStudenrsMarksById(unsigned int personId) {
                     query.value("Mark_ID").toUInt());
     queryResult.push_back(tmp);
   }
+  return queryResult;
+}
+
+StudentGroup DataBase::getStudentGroupByStudentId(unsigned int studentId) {
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT * FROM STUDENT_GROUP WHERE Student_ID = '" +
+                       QString::number(studentId) + "'");
+  if (!ok) qDebug() << query.lastError();
+  query.next();
+  StudentGroup queryResult(query.value("Group_ID").toUInt(),
+                           query.value("Student_ID").toUInt(),
+                           query.value("Putting_date").toString());
   return queryResult;
 }
 
