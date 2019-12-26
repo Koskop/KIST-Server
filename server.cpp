@@ -28,7 +28,7 @@ void Server::start() {
 void Server::slotNewConnection() {
   mTcpSocket = mTcpServer->nextPendingConnection();
 
-  mTcpSocket->write("Hello, World!!! I am echo server!\r\n");
+  //  mTcpSocket->write("Hello, World!!! I am echo server!\r\n");
   qDebug() << "Someone connected";
   connect(mTcpSocket, &QTcpSocket::readyRead, this, &Server::slotServerRead);
   connect(mTcpSocket, &QTcpSocket::disconnected, this,
@@ -38,12 +38,10 @@ void Server::slotNewConnection() {
 void Server::slotServerRead() {
   while (mTcpSocket->bytesAvailable() > 0) {
     QByteArray array = mTcpSocket->readAll();
-    qDebug() << array;
-    QJsonDocument request;
+
+    // DOLBAEB
 
     QByteArray responce;
-    responce = array;
-    request.fromJson(array);
 
     if (array == "0") responce = this->getPesronsName();
     if (array == "1") responce = this->getViolationByPersonId(9);
@@ -51,11 +49,6 @@ void Server::slotServerRead() {
     if (array == "3") responce = this->getGroupAndSpecialityByCathedraId(1);
     if (array == "4") responce = this->getStudentsName();
     if (array == "5") responce = this->getStudentInfo(1);
-
-    request = QJsonDocument::fromJson(responce);
-    qDebug() << request[0].toInt();
-    qDebug() << request[1][0];
-    qDebug() << request[1][1];
 
     mTcpSocket->write(responce);
   }
@@ -81,7 +74,7 @@ QByteArray Server::getPesronsName() {
   jsonMainArray.push_front(responceType);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
-  return jsonDoc.toJson();
+  return jsonDoc.toBinaryData();
 }
 
 QByteArray Server::getViolationByPersonId(unsigned int personId) {
@@ -107,7 +100,7 @@ QByteArray Server::getViolationByPersonId(unsigned int personId) {
   jsonMainArray.push_front(responceType);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
-  return jsonDoc.toJson();
+  return jsonDoc.toBinaryData();
 }
 
 QByteArray Server::getCathedras() {
@@ -126,7 +119,7 @@ QByteArray Server::getCathedras() {
   jsonMainArray.push_front(responceType);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
-  return jsonDoc.toJson();
+  return jsonDoc.toBinaryData();
 }
 
 QByteArray Server::getGroupAndSpecialityByCathedraId(unsigned int cathedraId) {
@@ -147,7 +140,7 @@ QByteArray Server::getGroupAndSpecialityByCathedraId(unsigned int cathedraId) {
   jsonMainArray.push_front(responceType);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
-  return jsonDoc.toJson();
+  return jsonDoc.toBinaryData();
 }
 
 QByteArray Server::getStudentsName() {
@@ -166,7 +159,7 @@ QByteArray Server::getStudentsName() {
   jsonMainArray.push_front(responceType);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
-  return jsonDoc.toJson();
+  return jsonDoc.toBinaryData();
 }
 
 QByteArray Server::getStudentInfo(unsigned int personId) {
@@ -188,7 +181,7 @@ QByteArray Server::getStudentInfo(unsigned int personId) {
   jsonMainArray.push_back(jsonArray);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
-  return jsonDoc.toJson();
+  return jsonDoc.toBinaryData();
 }
 
 QString Server::getIpAddress() {
