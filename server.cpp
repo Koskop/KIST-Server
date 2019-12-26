@@ -50,6 +50,7 @@ void Server::slotServerRead() {
     //    responce = this->getViolationByPersonId(9);
     // 2
     //    responce = this->getCathedras();
+    //    responce = this->getGroupAndSpecialityByCathedraId(1);
 
     // 3
     //    responce = this->getStudentsName();
@@ -108,6 +109,22 @@ QByteArray Server::getCathedras() {
     jsonArray.push_back(QString::number(a.getCathedraId()));
     jsonArray.push_back(a.getName());
     jsonMainArray.push_back(jsonArray);
+  }
+  jsonDoc.setArray(jsonMainArray);
+  qDebug() << jsonDoc;
+  return jsonDoc.toJson();
+}
+
+QByteArray Server::getGroupAndSpecialityByCathedraId(unsigned int cathedraId) {
+  QJsonDocument jsonDoc;
+  QJsonArray jsonMainArray;
+  for (auto a : base.getSpecialityByCathedrsId(cathedraId)) {
+    for (auto b : base.getGroupsBySpecialityId(a.getSpecialityId())) {
+      QJsonArray jsonArray;
+      jsonArray.push_back(a.getSpecialityName());
+      jsonArray.push_back(b.getGroupCode());
+      jsonMainArray.push_back(jsonArray);
+    }
   }
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;

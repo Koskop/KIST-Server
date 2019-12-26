@@ -20,6 +20,7 @@ class Server : public QObject {
   QByteArray getPesronsName();
   QByteArray getViolationByPersonId(unsigned int personId);
   QByteArray getCathedras();
+  QByteArray getGroupAndSpecialityByCathedraId(unsigned int cathedraId);
   QByteArray getStudentsName();
   QByteArray getStudentInfo(unsigned int personId);
 
