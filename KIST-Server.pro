@@ -22,6 +22,7 @@ HEADERS += \
     orders.h \
     person.h \
     server.h \
+    smark.h \
     sorderkind.h \
     speciality.h \
     spunishkind.h \
@@ -37,6 +38,7 @@ SOURCES += \
         orders.cpp \
         person.cpp \
         server.cpp \
+        smark.cpp \
         sorderkind.cpp \
         speciality.cpp \
         spunishkind.cpp \
