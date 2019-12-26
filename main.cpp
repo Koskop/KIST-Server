@@ -9,8 +9,6 @@ int main(int argc, char *argv[]) {
 
   Server server(nullptr, 4567);
   server.start();
-  DataBase base("CIST.sqlite3");
-  base.getCathedrs();
 
   return a.exec();
 }
