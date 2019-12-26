@@ -46,7 +46,7 @@ void Server::slotServerRead() {
     request.fromJson(array);
 
     // 1
-    //    responce = this->getPesronsName();
+    responce = this->getPesronsName();
     //    responce = this->getViolationByPersonId(9);
     // 2
     //    responce = this->getCathedras();
@@ -56,8 +56,11 @@ void Server::slotServerRead() {
     //    responce = this->getStudentsName();
     //    responce = this->getStudentInfo(1);
 
-    //    request = QJsonDocument::fromJson(responce);
-    //    qDebug() << request[0][0];
+    request = QJsonDocument::fromJson(responce);
+    qDebug() << request[0].toInt();
+    qDebug() << request[1][0];
+    qDebug() << request[1][1];
+
     mTcpSocket->write(responce);
   }
 }
@@ -69,12 +72,15 @@ void Server::setPort(quint16 p) { this->port = p; }
 QByteArray Server::getPesronsName() {
   QJsonDocument jsonDoc;
   QJsonArray jsonMainArray;
+  int count = 0;
   for (auto a : base.getPersonsFullName()) {
     QJsonArray jsonArray;
     jsonArray.push_back(QString::number(a.getPersonId()));
     jsonArray.push_back(a.getFullName());
     jsonMainArray.push_back(jsonArray);
+    count++;
   }
+  jsonMainArray.push_front(count);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
   return jsonDoc.toJson();
@@ -83,6 +89,7 @@ QByteArray Server::getPesronsName() {
 QByteArray Server::getViolationByPersonId(unsigned int personId) {
   QJsonDocument jsonDoc;
   QJsonArray jsonMainArray;
+  int count = 0;
   for (auto a : base.getViolationByPersonId(personId)) {
     QJsonArray jsonArray;
     jsonArray.push_back(QString::number(a.getViolationId()));
@@ -96,6 +103,7 @@ QByteArray Server::getViolationByPersonId(unsigned int personId) {
             .getOrderKindName());
     jsonMainArray.push_back(jsonArray);
   }
+  jsonMainArray.push_front(count);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
   return jsonDoc.toJson();
@@ -104,12 +112,15 @@ QByteArray Server::getViolationByPersonId(unsigned int personId) {
 QByteArray Server::getCathedras() {
   QJsonDocument jsonDoc;
   QJsonArray jsonMainArray;
+  int count = 0;
   for (auto a : base.getCathedrs()) {
     QJsonArray jsonArray;
     jsonArray.push_back(QString::number(a.getCathedraId()));
     jsonArray.push_back(a.getName());
     jsonMainArray.push_back(jsonArray);
+    count++;
   }
+  jsonMainArray.push_front(count);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
   return jsonDoc.toJson();
@@ -118,14 +129,17 @@ QByteArray Server::getCathedras() {
 QByteArray Server::getGroupAndSpecialityByCathedraId(unsigned int cathedraId) {
   QJsonDocument jsonDoc;
   QJsonArray jsonMainArray;
+  int count = 0;
   for (auto a : base.getSpecialityByCathedrsId(cathedraId)) {
     for (auto b : base.getGroupsBySpecialityId(a.getSpecialityId())) {
       QJsonArray jsonArray;
       jsonArray.push_back(a.getSpecialityName());
       jsonArray.push_back(b.getGroupCode());
       jsonMainArray.push_back(jsonArray);
+      count++;
     }
   }
+  jsonMainArray.push_front(count);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
   return jsonDoc.toJson();
@@ -134,12 +148,15 @@ QByteArray Server::getGroupAndSpecialityByCathedraId(unsigned int cathedraId) {
 QByteArray Server::getStudentsName() {
   QJsonDocument jsonDoc;
   QJsonArray jsonMainArray;
+  int count = 0;
   for (auto a : base.getStudents()) {
     QJsonArray jsonArray;
     jsonArray.push_back(QString::number(a.getStudentId()));
     jsonArray.push_back(base.getStudentsNameByPersonId(a.getStudentId()));
     jsonMainArray.push_back(jsonArray);
+    count++;
   }
+  jsonMainArray.push_front(count);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
   return jsonDoc.toJson();
@@ -152,10 +169,13 @@ QByteArray Server::getStudentInfo(unsigned int personId) {
       base.getStudentGroup(
               base.getStudentGroupByStudentId(personId).getGroupId())
           .getGroupCode());
+  int count = 0;
   QJsonArray jsonArray;
   for (auto a : base.getStudentsMarksById(personId)) {
     jsonArray.push_back(base.getSMarkNyId(a.getmarkId()).getMarkName());
+    count++;
   }
+  jsonMainArray.push_front(count);
   jsonMainArray.push_back(jsonArray);
   jsonDoc.setArray(jsonMainArray);
   qDebug() << jsonDoc;
