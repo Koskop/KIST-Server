@@ -26,6 +26,25 @@ QList<Person> DataBase::getPersonsFullName() {
   return queryResult;
 }
 
+QList<Violation> DataBase::getViolationByPersonId(unsigned int personId) {
+  QList<Violation> queryResult;
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT * FROM VIOLATION WHERE Person_ID = '" +
+                       QString::number(personId) + "'");
+  if (!ok) qDebug() << query.lastError();
+
+  while (query.next()) {
+    Violation tmp(query.value("Violation_ID").toUInt(),
+                  query.value("Violation_kind_ID").toUInt(),
+                  query.value("Punish_kind_ID").toUInt(),
+                  query.value("Violation_date").toString(),
+                  query.value("Person_ID").toUInt(),
+                  query.value("Order_ID").toUInt());
+    queryResult.push_back(tmp);
+  }
+  return queryResult;
+}
+
 QList<Cathedra> DataBase::getCathedrs() {
   QList<Cathedra> queryResult;
   QSqlQuery query(sdb);

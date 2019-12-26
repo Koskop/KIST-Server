@@ -12,6 +12,7 @@ class DataBase {
   ~DataBase();
   // first query
   QList<Person> getPersonsFullName();
+  QList<Violation> getViolationByPersonId(unsigned int personId);
 
   // second query
   QList<Cathedra> getCathedrs();
