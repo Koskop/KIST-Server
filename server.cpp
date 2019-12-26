@@ -44,11 +44,15 @@ void Server::slotServerRead() {
     QByteArray responce;
     responce = array;
     request.fromJson(array);
-    if (array.toStdString() == "getPesronsName" ||
-        array.toStdString() == "getPesronsName\r\n") {
-      responce = this->getPesronsName();
-    }
-    //    responce = this->getViolationByPersonId(1);
+
+    // 1
+    //    responce = this->getPesronsName();
+    //    responce = this->getViolationByPersonId(9);
+    // 2
+
+    // 3
+    //    responce = this->getStudentsName();
+
     //    request = QJsonDocument::fromJson(responce);
     //    qDebug() << request[0][0];
     mTcpSocket->write(responce);
@@ -87,6 +91,20 @@ QByteArray Server::getViolationByPersonId(unsigned int personId) {
         base.getSOrderKindById(
                 base.getOrdersByOrdersId(a.getOrderId()).getOrderKindId())
             .getOrderKindName());
+    jsonMainArray.push_back(jsonArray);
+  }
+  jsonDoc.setArray(jsonMainArray);
+  qDebug() << jsonDoc;
+  return jsonDoc.toJson();
+}
+
+QByteArray Server::getStudentsName() {
+  QJsonDocument jsonDoc;
+  QJsonArray jsonMainArray;
+  for (auto a : base.getStudents()) {
+    QJsonArray jsonArray;
+    jsonArray.push_back(QString::number(a.getStudentId()));
+    jsonArray.push_back(base.getStudentsNameByPersonId(a.getStudentId()));
     jsonMainArray.push_back(jsonArray);
   }
   jsonDoc.setArray(jsonMainArray);

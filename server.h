@@ -19,6 +19,7 @@ class Server : public QObject {
 
   QByteArray getPesronsName();
   QByteArray getViolationByPersonId(unsigned int personId);
+  QByteArray getStudentsName();
 
   // getters
   QString getIpAddress();
