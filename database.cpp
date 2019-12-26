@@ -122,7 +122,7 @@ QList<Cathedra> DataBase::getCathedrs() {
 QList<Speciality> DataBase::getSpecialityByCathedrsId(unsigned int cafedraId) {
   QList<Speciality> queryResult;
   QSqlQuery query(sdb);
-  bool ok = query.exec("SELECT *h FROM SPECIALITY WHERE Cafedra_ID = '" +
+  bool ok = query.exec("SELECT * FROM SPECIALITY WHERE Cafedra_ID = '" +
                        QString::number(cafedraId) + "'");
   if (!ok) qDebug() << query.lastError();
 
@@ -131,6 +131,23 @@ QList<Speciality> DataBase::getSpecialityByCathedrsId(unsigned int cafedraId) {
                    query.value("Cafedra_ID").toUInt(),
                    query.value("Speciality_name").toString(),
                    query.value("Speciality_shifr").toString());
+    queryResult.push_back(tmp);
+  }
+  return queryResult;
+}
+
+QList<Groups> DataBase::getGroupsBySpecialityId(unsigned int specialityId) {
+  QList<Groups> queryResult;
+  QSqlQuery query(sdb);
+  bool ok = query.exec("SELECT * FROM GROUPS WHERE Speciality_ID = '" +
+                       QString::number(specialityId) + "'");
+  if (!ok) qDebug() << query.lastError();
+
+  while (query.next()) {
+    Groups tmp(query.value("Group_ID").toUInt(),
+               query.value("Speciality_ID").toUInt(),
+               query.value("Group_code").toString(),
+               query.value("Group_creat_date").toString());
     queryResult.push_back(tmp);
   }
   return queryResult;
@@ -177,7 +194,7 @@ SMark DataBase::getSMarkNyId(unsigned int markId) {
 QList<StudentMark> DataBase::getStudentsMarksById(unsigned int personId) {
   QList<StudentMark> queryResult;
   QSqlQuery query(sdb);
-  bool ok = query.exec("SELECT *h FROM STUDENT_MARKS WHERE Student_ID = '" +
+  bool ok = query.exec("SELECT * FROM STUDENT_MARKS WHERE Student_ID = '" +
                        QString::number(personId) + "'");
   if (!ok) qDebug() << query.lastError();
 

@@ -22,6 +22,7 @@ class DataBase {
   // second query
   QList<Cathedra> getCathedrs();
   QList<Speciality> getSpecialityByCathedrsId(unsigned int cafedraId);
+  QList<Groups> getGroupsBySpecialityId(unsigned int specialityId);
 
   // third query
   QList<Student> getStudents();
