@@ -59,9 +59,8 @@ QList<Violation> DataBase::getViolationByPersonId(unsigned int personId) {
 
 Orders DataBase::getOrdersByOrdersId(unsigned int ordersId) {
   QSqlQuery query(sdb);
-  bool ok =
-      query.exec("SELECT * FROM SVIOLATION_KIND WHERE Violation_kind_ID = '" +
-                 QString::number(ordersId) + "'");
+  bool ok = query.exec("SELECT * FROM ORDERS WHERE Order_ID = '" +
+                       QString::number(ordersId) + "'");
   if (!ok) qDebug() << query.lastError();
   query.next();
   Orders queryResult(
@@ -85,9 +84,8 @@ SViolationKind DataBase::getSViolationKindById(unsigned int violationKindId) {
 
 SPunishKind DataBase::getSPunishKindById(unsigned int punishKindId) {
   QSqlQuery query(sdb);
-  bool ok =
-      query.exec("SELECT * FROM SVIOLATION_KIND WHERE Punish_kind_ID = '" +
-                 QString::number(punishKindId) + "'");
+  bool ok = query.exec("SELECT * FROM SPUNISH_KIND WHERE Punish_kind_ID = '" +
+                       QString::number(punishKindId) + "'");
   if (!ok) qDebug() << query.lastError();
   query.next();
   SPunishKind queryResult(query.value("Punish_kind_ID").toUInt(),
@@ -97,9 +95,8 @@ SPunishKind DataBase::getSPunishKindById(unsigned int punishKindId) {
 
 SOrderKind DataBase::getSOrderKindById(unsigned int orderKindById) {
   QSqlQuery query(sdb);
-  bool ok =
-      query.exec("SELECT * FROM SVIOLATION_KIND WHERE Violation_kind_ID = '" +
-                 QString::number(orderKindById) + "'");
+  bool ok = query.exec("SELECT * FROM SORDER_KIND WHERE Order_kind_ID = '" +
+                       QString::number(orderKindById) + "'");
   if (!ok) qDebug() << query.lastError();
   query.next();
   SOrderKind queryResult(query.value("Order_kind_ID").toUInt(),
