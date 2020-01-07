@@ -125,7 +125,7 @@ QByteArray Server::getCathedras() {
 QByteArray Server::getGroupAndSpecialityByCathedraId(unsigned int cathedraId) {
   QJsonDocument jsonDoc;
   QJsonArray jsonMainArray;
-  int responceType = 0;
+  int responceType = 3;
   int count = 0;
   for (auto a : base.getSpecialityByCathedrsId(cathedraId)) {
     for (auto b : base.getGroupsBySpecialityId(a.getSpecialityId())) {
