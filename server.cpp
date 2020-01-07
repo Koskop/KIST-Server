@@ -39,16 +39,16 @@ void Server::slotServerRead() {
 
     QByteArray responce;
 
-    if (array[0][0] == "0") responce = this->getPesronsName();
-    if (array[0][0] == "1")
-      responce = this->getViolationByPersonId(array[0][1].toString().toUInt());
-    if (array[0][0] == "2") responce = this->getCathedras();
-    if (array[0][0] == "3")
-      responce = this->getGroupAndSpecialityByCathedraId(
-          array[0][1].toString().toUInt());
-    if (array[0][0] == "4") responce = this->getStudentsName();
-    if (array[0][0] == "5")
-      responce = this->getStudentInfo(array[0][1].toString().toUInt());
+    if (array[0].toString() == "0") responce = this->getPesronsName();
+    if (array[0].toString() == "1")
+      responce = this->getViolationByPersonId(array[1].toString().toUInt());
+    if (array[0].toString() == "2") responce = this->getCathedras();
+    if (array[0].toString() == "3")
+      responce =
+          this->getGroupAndSpecialityByCathedraId(array[1].toString().toUInt());
+    if (array[0].toString() == "4") responce = this->getStudentsName();
+    if (array[0].toString() == "5")
+      responce = this->getStudentInfo(array[1].toString().toUInt());
 
     mTcpSocket->write(responce);
   }
