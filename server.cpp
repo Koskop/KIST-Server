@@ -27,8 +27,6 @@ void Server::start() {
 
 void Server::slotNewConnection() {
   mTcpSocket = mTcpServer->nextPendingConnection();
-
-  //  mTcpSocket->write("Hello, World!!! I am echo server!\r\n");
   qDebug() << "Someone connected";
   connect(mTcpSocket, &QTcpSocket::readyRead, this, &Server::slotServerRead);
   connect(mTcpSocket, &QTcpSocket::disconnected, this,
@@ -37,18 +35,22 @@ void Server::slotNewConnection() {
 
 void Server::slotServerRead() {
   while (mTcpSocket->bytesAvailable() > 0) {
-    QByteArray array = mTcpSocket->readAll();
+    QJsonDocument array = QJsonDocument::fromBinaryData(mTcpSocket->readAll());
 
     // DOLBAEB
 
     QByteArray responce;
 
-    if (array == "0") responce = this->getPesronsName();
-    if (array == "1") responce = this->getViolationByPersonId(9);
-    if (array == "2") responce = this->getCathedras();
-    if (array == "3") responce = this->getGroupAndSpecialityByCathedraId(1);
-    if (array == "4") responce = this->getStudentsName();
-    if (array == "5") responce = this->getStudentInfo(1);
+    if (array[0][0] == "0") responce = this->getPesronsName();
+    if (array[0][0] == "1")
+      responce = this->getViolationByPersonId(array[0][1].toString().toUInt());
+    if (array[0][0] == "2") responce = this->getCathedras();
+    if (array[0][0] == "3")
+      responce = this->getGroupAndSpecialityByCathedraId(
+          array[0][1].toString().toUInt());
+    if (array[0][0] == "4") responce = this->getStudentsName();
+    if (array[0][0] == "5")
+      responce = this->getStudentInfo(array[0][1].toString().toUInt());
 
     mTcpSocket->write(responce);
   }
