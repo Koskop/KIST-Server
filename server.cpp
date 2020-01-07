@@ -37,8 +37,6 @@ void Server::slotServerRead() {
   while (mTcpSocket->bytesAvailable() > 0) {
     QJsonDocument array = QJsonDocument::fromBinaryData(mTcpSocket->readAll());
 
-    // DOLBAEB
-
     QByteArray responce;
 
     if (array[0][0] == "0") responce = this->getPesronsName();
